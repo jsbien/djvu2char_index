@@ -2,7 +2,7 @@
 Create character index for a DjVu document
 
 Designed by Janusz S. Bień (jsbien@uw.edu.pl).
-To be implemented by ChatPGT.
+To be implemented by ChatGPT.
 
 The program at present doesn't accept as the input an DjVu document,
 but the hidden text in the format used by the djvused program. We call
@@ -77,6 +77,7 @@ program, cf. e.g.  https://github.com/barak/djview4.
 Here are the relenat excerpts from the man page (https://djvu.sourceforge.net/doc/man/djview4.html)
 
 START QUOTE
+
     A local DjVu document URL of the form: 
     file:///path/name.djvu[?djvuopts&keyword=value&...] 
 
@@ -96,7 +97,7 @@ END QUOTE
 
 'w' and 'h' stand of course for width and height.
 
-I don't use colors and skip the path, so for (char 49 721 159 837 "a")
+We don't use colors and skip the path, so for (char 49 721 159 837 "a")
 we get
 
 Hochfeder-02_PT01_020bisOCR.djvu?djvuopts=&page=1&highlight=49,721,110,116
@@ -104,4 +105,45 @@ Hochfeder-02_PT01_020bisOCR.djvu?djvuopts=&page=1&highlight=49,721,110,116
 The document name comes from the 'select' command mentioned earlier,
 and the page number comes from the count described in the previous
 paragraph.
+
+The final step to consolidate all the relevant data into an index
+supported by 'djview4poliqarp' program
+(https://github.com/jsbien/djview-poliqarp_fork). For the time being
+the best description of the index format can be found in the my paper
+"Towards an inventory of old print characters: Ungler’s Rubricella, a
+case study" (http://dx.doi.org/10.47397/tb/44-3/tb138bien-rubricella).
+
+Here are the relevant fragments:
+
+START QUOTE
+
+From the technical point of view the indexes
+are just simple CSV files (using semicolon as the
+separator). Every line of an index file consists of
+three or four fields:
+
+1. The text used for sorting and incremental search.
+
+2. The reference to the relevant image fragment in
+the form used by the djview4 viewer mentioned
+earlier, namely a Universal Resource Locator.
+[...]
+
+3. A description: text displayed for the current
+entry in a small window under the index.
+
+4. An optional comment displayed after the entry;
+we precede it by ※ (U+203B reference mark)
+for a more distinctive display.
+
+END QUOTE
+
+In our case we decide that the first element will be the cgaracter
+itself, the third element will be its location, and the fourth the
+base name of the file document preceded by a single space and ※. For
+example:
+
+a;file:Hochfeder-02_PT01_020bisOCR.djvu?djvuopts=&page=1&highlight=49,721,110,116;p 1 c 1 pa 1 l 1 1 w 1 c 1; ※ Hochfeder-02_PT01_020bisOCR
+
+
 
